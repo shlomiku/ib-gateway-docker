@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM openjdk:11
 MAINTAINER Mike Ehrenberg <mvberg@gmail.com>
 
 RUN  apt-get update \
@@ -18,7 +18,7 @@ WORKDIR /opt/TWS
 
 #RUN wget -q http://one-algo.s3.amazonaws.com/ibgateway-latest-standalone-linux-x64-v972.1k.sh
 # RUN chmod a+x ibgateway-latest-standalone-linux-x64-v972.1k.sh
-## let's get the scripts directly from IB not from an unknown s3 bucket. 
+## let's get the scripts directly from IB not from an unknown s3 bucket.
 ## stable, 972.1p
 # RUN wget -q https://download2.interactivebrokers.com/installers/ibgateway/stable-standalone/ibgateway-stable-standalone-linux-x64.sh
 # RUN chmod a+x ibgateway-stable-standalone-linux-x64.sh
@@ -38,21 +38,12 @@ RUN wget -q https://github.com/ib-controller/ib-controller/releases/download/3.4
 RUN unzip ./IBController-3.4.0.zip
 RUN chmod -R u+x *.sh && chmod -R u+x Scripts/*.sh
 
-# Install Java 8 TODO maybe just use "from:java8"
-RUN \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -y oracle-java8-installer && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk8-installer
-
 WORKDIR /
 
 # Install TWS
 # RUN yes n | /opt/TWS/ibgateway-latest-standalone-linux-x64-v972.1k.sh
 # RUN yes n | /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
-RUN yes n | /opt/TWS/ibgateway-latest-standalone-linux-x64.sh
+RUN yes '' | /opt/TWS/ibgateway-latest-standalone-linux-x64.sh
 
 
 #CMD yes
